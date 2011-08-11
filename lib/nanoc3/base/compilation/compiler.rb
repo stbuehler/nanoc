@@ -80,7 +80,12 @@ module Nanoc3
 
       # Compile reps
       load
+
       @site.freeze
+
+      # Determine which reps need to be recompiled
+      forget_dependencies_if_outdated(items)
+
       dependency_tracker.start
       compile_reps(reps)
       dependency_tracker.stop
@@ -88,6 +93,7 @@ module Nanoc3
     ensure
       # Cleanup
       FileUtils.rm_rf(Nanoc3::Filter::TMP_BINARY_ITEMS_DIR)
+      FileUtils.rm_rf(Nanoc3::Helpers::Asset::TMP_ASSET_ITEMS_DIR)
     end
 
     # @group Private instance methods
@@ -120,9 +126,6 @@ module Nanoc3
 
       # Load auxiliary stores
       stores.each { |s| s.load }
-
-      # Determine which reps need to be recompiled
-      forget_dependencies_if_outdated(items)
 
       @loaded = true
     rescue => e
@@ -289,6 +292,11 @@ module Nanoc3
     end
     memoize :outdatedness_checker
 
+    def asset_registry
+      Nanoc3::AssetRegistry.new(reps)
+    end
+    memoize :asset_registry
+
   private
 
     # @return [Array<Nanoc3::Item>] The site’s items
@@ -402,6 +410,7 @@ module Nanoc3
         if i.reps.any? { |r| outdatedness_checker.outdated?(r) }
           dependency_tracker.forget_dependencies_for(i)
         end
+        i.reps.each { |r| asset_registry.forget_assets_for(r) }
       end
     end
 
@@ -447,7 +456,8 @@ module Nanoc3
         checksum_store,
         compiled_content_cache,
         dependency_tracker,
-        rule_memory_store
+        rule_memory_store,
+        asset_registry,
       ]
     end
 

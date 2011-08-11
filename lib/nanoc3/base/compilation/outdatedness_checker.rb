@@ -93,7 +93,8 @@ module Nanoc3
           return Nanoc3::OutdatednessReasons::SourceModified if !checksums_identical?(obj.item)
 
           # Outdated if compiled file doesn't exist (yet)
-          return Nanoc3::OutdatednessReasons::NotWritten if obj.raw_path && !File.file?(obj.raw_path)
+          return Nanoc3::OutdatednessReasons::NotWritten if (obj.raw_path && !File.file?(obj.raw_path)) ||
+              @site.compiler.asset_registry.rep_outdated(obj)
 
           # Outdated if code snippets outdated
           return Nanoc3::OutdatednessReasons::CodeSnippetsModified if site.code_snippets.any? do |cs|

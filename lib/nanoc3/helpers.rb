@@ -2,6 +2,7 @@
 
 module Nanoc3::Helpers
 
+  autoload 'Asset',       'nanoc3/helpers/asset'
   autoload 'Blogging',    'nanoc3/helpers/blogging'
   autoload 'Breadcrumbs', 'nanoc3/helpers/breadcrumbs'
   autoload 'Cache',       'nanoc3/helpers/cache'

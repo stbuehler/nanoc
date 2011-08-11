@@ -117,7 +117,7 @@ module Nanoc3
     def output_filename
       @output_filename ||= begin
         FileUtils.mkdir_p(TMP_BINARY_ITEMS_DIR)
-        tempfile = Tempfile.new(filename.gsub(/[^a-z]/, '-'), TMP_BINARY_ITEMS_DIR)
+        tempfile = Tempfile.new(filename.gsub(/[^A-Za-z0-9.]/, '-'), TMP_BINARY_ITEMS_DIR)
         new_filename = tempfile.path
         tempfile.close!
 
