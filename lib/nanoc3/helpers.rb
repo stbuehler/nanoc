@@ -4,6 +4,7 @@ module Nanoc3::Helpers
 
   autoload 'Blogging',    'nanoc3/helpers/blogging'
   autoload 'Breadcrumbs', 'nanoc3/helpers/breadcrumbs'
+  autoload 'Cache',       'nanoc3/helpers/cache'
   autoload 'Capturing',   'nanoc3/helpers/capturing'
   autoload 'Filtering',   'nanoc3/helpers/filtering'
   autoload 'HTMLEscape',  'nanoc3/helpers/html_escape'
