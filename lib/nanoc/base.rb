@@ -26,6 +26,7 @@ module Nanoc
   autoload 'ItemRep',              'nanoc/base/result_data/item_rep'
 
   # Load compilation classes
+  autoload 'AssetRegistry',        'nanoc/base/compilation/asset_registry'
   autoload 'ChecksumStore',        'nanoc/base/compilation/checksum_store'
   autoload 'CompiledContentCache', 'nanoc/base/compilation/compiled_content_cache'
   autoload 'Compiler',             'nanoc/base/compilation/compiler'

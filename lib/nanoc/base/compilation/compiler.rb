@@ -85,9 +85,12 @@ module Nanoc
       # Determine which reps need to be recompiled
       forget_dependencies_if_outdated(items)
 
+      asset_registry.start
       dependency_tracker.start
       compile_reps(reps)
       dependency_tracker.stop
+      asset_registry.stop
+
       store
     ensure
       # Cleanup
@@ -407,6 +410,7 @@ module Nanoc
       items.each do |i|
         if i.reps.any? { |r| outdatedness_checker.outdated?(r) }
           dependency_tracker.forget_dependencies_for(i)
+          i.reps.each { |r| asset_registry.forget_assets_for(r) }
         end
       end
     end
@@ -446,6 +450,12 @@ module Nanoc
     end
     memoize :rule_memory_calculator
 
+    # @return [AssetRegistry] The asset registry
+    def asset_registry
+      Nanoc::AssetRegistry.new(reps)
+    end
+    memoize :asset_registry
+
     # Returns all stores that can load/store data that can be used for
     # compilation.
     def stores
@@ -453,7 +463,8 @@ module Nanoc
         checksum_store,
         compiled_content_cache,
         dependency_tracker,
-        rule_memory_store
+        rule_memory_store,
+        asset_registry
       ]
     end
 

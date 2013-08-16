@@ -35,6 +35,9 @@ module Nanoc
     NotWritten = Generic.new(
       'This item representation has not yet been written to the output directory (but it does have a path).')
 
+    AssetNotWritten = Generic.new(
+      'This item representation has assets that are missing from to the output directory.')
+
     RulesModified = Generic.new(
       'The rules file has been modified since the last time the site was compiled.')
 

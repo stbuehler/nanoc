@@ -33,6 +33,8 @@ module Nanoc::Extra
         end
       end.flatten.compact.select { |f| File.file?(f) }
 
+      asset_files = self.site.compiler.asset_registry.assets
+
       # Get present files and dirs
       present_files_and_dirs = Set.new
       Find.find(self.site.config[:output_dir] + '/') do |f|
@@ -42,7 +44,7 @@ module Nanoc::Extra
       present_dirs  = present_files_and_dirs.select { |f| File.directory?(f) }
 
       # Remove stray files
-      stray_files = (present_files - compiled_files)
+      stray_files = (present_files - compiled_files - asset_files)
       stray_files.each do |f|
         next if filename_excluded?(f)
         self.delete_file(f)

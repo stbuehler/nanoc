@@ -95,6 +95,9 @@ module Nanoc
           # Outdated if compiled file doesn't exist (yet)
           return Nanoc::OutdatednessReasons::NotWritten if obj.raw_path && !File.file?(obj.raw_path)
 
+          # Outdated if associated asset file doesn't exist (yet)
+          return Nanoc::OutdatednessReasons::AssetNotWritten if site.compiler.asset_registry.rep_outdated?(obj)
+
           # Outdated if code snippets outdated
           return Nanoc::OutdatednessReasons::CodeSnippetsModified if site.code_snippets.any? do |cs|
             object_modified?(cs)
