@@ -2,6 +2,7 @@
 
 module Nanoc::Helpers
 
+  autoload 'Asset',       'nanoc/helpers/asset'
   autoload 'Blogging',    'nanoc/helpers/blogging'
   autoload 'Breadcrumbs', 'nanoc/helpers/breadcrumbs'
   autoload 'Capturing',   'nanoc/helpers/capturing'
