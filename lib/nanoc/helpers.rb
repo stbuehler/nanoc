@@ -5,6 +5,7 @@ module Nanoc::Helpers
   autoload 'Asset',       'nanoc/helpers/asset'
   autoload 'Blogging',    'nanoc/helpers/blogging'
   autoload 'Breadcrumbs', 'nanoc/helpers/breadcrumbs'
+  autoload 'Cache',       'nanoc/helpers/cache'
   autoload 'Capturing',   'nanoc/helpers/capturing'
   autoload 'Filtering',   'nanoc/helpers/filtering'
   autoload 'HTMLEscape',  'nanoc/helpers/html_escape'
