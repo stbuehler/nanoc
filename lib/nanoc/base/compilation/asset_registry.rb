@@ -48,6 +48,11 @@ module Nanoc
       @assets.values.flatten.sort.uniq
     end
 
+    # @api private
+    def asset_mappings
+      @assets
+    end
+
     # Register an asset for an item representation
     #
     # @return [void]

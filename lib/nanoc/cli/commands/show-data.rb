@@ -29,6 +29,14 @@ module Nanoc::CLI::Commands
       compiler.load
       dependency_tracker = compiler.dependency_tracker
 
+      assets = compiler.asset_registry.asset_mappings
+      assets_reverse = {}
+      assets.each do |rep,fnames|
+        fnames.each do |fname|
+          (assets_reverse[fname] ||= []) << rep
+        end
+      end
+
       # Print item dependencies
       puts '=== Item dependencies ======================================================='
       puts
@@ -106,6 +114,17 @@ module Nanoc::CLI::Commands
           puts "  is outdated: #{outdatedness_reason.message}"
         else
           puts "  is not outdated"
+        end
+        puts
+      end
+
+      # Print assets
+      puts '=== Assets'
+      puts
+      assets_reverse.keys.sort.each do |asset|
+        puts "asset #{asset}:"
+        assets_reverse[asset].each do |rep|
+          puts "  used by item #{rep[1]}, rep #{rep[2].to_s}"
         end
         puts
       end
